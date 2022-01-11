@@ -1,15 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
-class GalleryPage extends StatefulWidget {
-  GalleryPage({Key? key}) : super(key: key);
+class GalleryPage extends StatelessWidget {
+  const GalleryPage({Key? key}) : super(key: key);
 
   @override
-  _GalleryPageState createState() => _GalleryPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Gallery')),
+      body: Gallery(),
+    );
+  }
 }
 
-class _GalleryPageState extends State<GalleryPage> {
+class Gallery extends StatefulWidget {
+  @override
+  _GalleryState createState() => _GalleryState();
+}
+
+class _GalleryState extends State<Gallery> {
   bool loading = false;
-  List<String> images = [];
+  List<File> images = [];
 
   @override
   void initState() {
@@ -31,7 +43,7 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 
   void _loadImages() async {
-    List<String> _images = [];
+    List<File> _images = [];
     setState(() {
       loading = false;
       images = _images;
