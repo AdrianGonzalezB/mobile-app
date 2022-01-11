@@ -1,0 +1,20 @@
+{
+    "nomApp" : "app",
+    "rutes" : [
+        {
+            "ruta" : "page1",
+            "icona" : "",
+            "texte": "page1"
+        },
+        {
+            "ruta" : "page2",
+            "icona" : "",
+            "texte": "page2"
+        },
+        {
+            "ruta" : "page3",
+            "icona" : "",
+            "texte": "page3"
+        }
+    ]
+}
