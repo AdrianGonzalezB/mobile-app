@@ -2,19 +2,19 @@
     "nomApp" : "app",
     "rutes" : [
         {
-            "ruta" : "page1",
-            "icona" : "",
-            "texte": "page1"
+            "ruta" : "gallery",
+            "icona" : "image",
+            "texte": "Gallery"
         },
         {
-            "ruta" : "page2",
-            "icona" : "",
-            "texte": "page2"
+            "ruta" : "pong",
+            "icona" : "folder_open",
+            "texte": "Pong Minigame"
         },
         {
-            "ruta" : "page3",
+            "ruta" : "language",
             "icona" : "",
-            "texte": "page3"
+            "texte": "Languages"
         }
     ]
 }
