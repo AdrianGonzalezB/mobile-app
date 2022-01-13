@@ -84,9 +84,13 @@ class ImagePage extends StatelessWidget {
       ),
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.network(
-          'https://picsum.photos/id/$id/600/600',
-        ),
+        child: InteractiveViewer(
+            boundaryMargin: const EdgeInsets.all(20.0),
+            minScale: 0.1,
+            maxScale: 3.0,
+            child: Image.network(
+              'https://picsum.photos/id/$id/600/600',
+            )),
       ),
     );
   }
