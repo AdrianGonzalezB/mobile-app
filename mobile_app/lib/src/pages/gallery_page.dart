@@ -34,28 +34,60 @@ class _GalleryState extends State<Gallery> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-      itemBuilder: (context, index) =>
-          Image.network('https://picsum.photos/id/${images[index]}/300/300}'),
-      itemCount: images.length,
-    );
-  }
-
   void _loadImages() async {
-    //var url = Uri.https("https://picsum.photos/v2/list");
-    final response = await http.get(Uri.parse('https://picsum.photos/v2/list'));
+    var url = 'https://picsum.photos/v2/list';
+    final response = await http.get(Uri.parse(url));
     final json = jsonDecode(response.body);
-    List<String> _images = [];
+    List<String> _ids = [];
     for (var image in json) {
-      _images.add(image['id']);
+      _ids.add(image['id']);
     }
     setState(() {
       loading = false;
-      images = _images;
+      images = _ids;
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (loading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return GridView.builder(
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => ImagePage(images[index])),
+          );
+        },
+        child: Image.network(
+          'https://picsum.photos/id/${images[index]}/300/300',
+        ),
+      ),
+      itemCount: images.length,
+    );
+  }
+}
+
+class ImagePage extends StatelessWidget {
+  final String id;
+  ImagePage(this.id);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Image.network(
+          'https://picsum.photos/id/$id/600/600',
+        ),
+      ),
+    );
   }
 }
