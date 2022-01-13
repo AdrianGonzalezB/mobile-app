@@ -1,4 +1,6 @@
-import 'dart:io';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 
@@ -21,32 +23,71 @@ class Gallery extends StatefulWidget {
 
 class _GalleryState extends State<Gallery> {
   bool loading = false;
-  List<File> images = [];
+  List<String> images = [];
 
   @override
   void initState() {
     loading = true;
-    images = [];
+    images = ['0', '10', '1002'];
 
     _loadImages();
     super.initState();
   }
 
+  void _loadImages() async {
+    var url = 'https://picsum.photos/v2/list';
+    final response = await http.get(Uri.parse(url));
+    final json = jsonDecode(response.body);
+    List<String> _ids = [];
+    for (var image in json) {
+      _ids.add(image['id']);
+    }
+    setState(() {
+      loading = false;
+      images = _ids;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return GridView.builder(
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-      itemBuilder: (context, index) => Image.network(''),
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => ImagePage(images[index])),
+          );
+        },
+        child: Image.network(
+          'https://picsum.photos/id/${images[index]}/300/300',
+        ),
+      ),
       itemCount: images.length,
     );
   }
+}
 
-  void _loadImages() async {
-    List<File> _images = [];
-    setState(() {
-      loading = false;
-      images = _images;
-    });
+class ImagePage extends StatelessWidget {
+  final String id;
+  ImagePage(this.id);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Image.network(
+          'https://picsum.photos/id/$id/600/600',
+        ),
+      ),
+    );
   }
 }
