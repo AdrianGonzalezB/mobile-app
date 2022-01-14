@@ -15,6 +15,11 @@
             "ruta" : "language",
             "icona" : "",
             "texte": "Languages"
+        },
+        {
+            "ruta" : "star",
+            "icona" : "star",
+            "texte": " "
         }
     ]
 }
