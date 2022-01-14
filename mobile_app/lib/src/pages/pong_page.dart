@@ -18,7 +18,10 @@ enum direction { UP, DOWN, LEFT, RIGHT }
 class _PongGameState extends State<PongGame> {
   // Player variables (Bottom Brick)
   double playerX = -0.2;
-  double playerWidth = 0.4; // out of 2
+  double brickWidth = 0.4; // out of 2
+
+  // Enemy variables (Top Brick)
+  double enemyX = -0.2;
 
   // Ball variables
   double ballX = 0;
@@ -34,6 +37,8 @@ class _PongGameState extends State<PongGame> {
       updateDirection();
       // Ball Movement
       moveBall();
+
+      // Move enemy Block
 
       // Check if the player is dead
       if (isPlayerDead()) {
@@ -120,7 +125,7 @@ class _PongGameState extends State<PongGame> {
   void updateDirection() {
     setState(() {
       // Update vertical direction
-      if (ballY >= 0.9 && playerX + playerWidth >= ballX && playerX <= ballX) {
+      if (ballY >= 0.9 && playerX + brickWidth >= ballX && playerX <= ballX) {
         ballYDirection = direction.UP;
       } else if (ballY <= -0.9) {
         ballYDirection = direction.DOWN;
@@ -178,10 +183,10 @@ class _PongGameState extends State<PongGame> {
               gameHasStarted: gameStarted,
             ),
             // Top Brick
-            MyBrick(x: 0.0, y: -0.9, brickWidth: playerWidth),
+            MyBrick(x: 0.0, y: -0.9, brickWidth: brickWidth),
 
             // Bottom Brick
-            MyBrick(x: playerX, y: 0.9, brickWidth: playerWidth),
+            MyBrick(x: playerX, y: 0.9, brickWidth: brickWidth),
             // Ball
             MyBall(x: ballX, y: ballY),
           ])),
