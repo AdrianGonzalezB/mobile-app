@@ -41,8 +41,8 @@ class _PongGameState extends State<PongGame> {
   void moveBall() {
     setState(() {
       if (ballDirection == direction.DOWN)
-        ballY += 0.1;
-      else if (ballDirection == direction.UP) ballY -= 0.1;
+        ballY += 0.001;
+      else if (ballDirection == direction.UP) ballY -= 0.001;
     });
   }
 
@@ -70,7 +70,7 @@ class _PongGameState extends State<PongGame> {
             ),
             MyBrick(x: 0.0, y: -0.9),
             MyBrick(x: 0.0, y: 0.9),
-            MyBall(x: 0.0, y: 0.0)
+            MyBall(x: ballX, y: ballY)
           ])),
         ),
       ),
