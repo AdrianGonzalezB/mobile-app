@@ -63,9 +63,7 @@ class _PongGameState extends State<PongGame> {
   void updateDirection() {
     setState(() {
       // Update vertical direction
-      if (ballY >= 0.9 &&
-          playerX + playerWidth >= ballX &&
-          playerX + playerWidth <= ballX) {
+      if (ballY >= 0.9 && playerX + playerWidth >= ballX && playerX <= ballX) {
         ballYDirection = direction.UP;
       } else if (ballY <= -0.9) {
         ballYDirection = direction.DOWN;
