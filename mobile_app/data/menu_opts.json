@@ -13,7 +13,7 @@
         },
         {
             "ruta" : "language",
-            "icona" : "",
+            "icona" : "donut_large",
             "texte": "Languages"
         }
     ]
