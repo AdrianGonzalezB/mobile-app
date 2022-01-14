@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:mobile_app/src/pages/ball.dart';
 import 'package:mobile_app/src/pages/brick.dart';
 import 'package:mobile_app/src/pages/coverscreen.dart';
+import 'package:mobile_app/src/pages/home_page.dart';
 
 class PongGame extends StatefulWidget {
   @override
@@ -38,12 +39,68 @@ class _PongGameState extends State<PongGame> {
       if (isPlayerDead()) {
         timer.cancel();
         // Resets the game
-        resetGame();
+        //resetGame();
+        _showDialog();
       }
     });
   }
 
+  void _showDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.deepPurple,
+            title: Center(
+              child: Text(
+                'PURPLE WIN',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            actions: [
+              GestureDetector(
+                // Resets the Game
+                onTap: resetGame,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    padding: EdgeInsets.all(7),
+                    color: Colors.deepPurple[100],
+                    child: Text(
+                      "PLAY AGAIN",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: resetGame,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    padding: EdgeInsets.all(7),
+                    color: Colors.deepPurple[100],
+                    child: Text(
+                      "EXIT",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   void resetGame() {
+    Navigator.pop(context);
     setState(() {
       gameStarted = false;
       ballX = 0.0;
@@ -53,7 +110,7 @@ class _PongGameState extends State<PongGame> {
   }
 
   bool isPlayerDead() {
-    if (ballX >= 1) {
+    if (ballY >= 1) {
       return true;
     }
 
