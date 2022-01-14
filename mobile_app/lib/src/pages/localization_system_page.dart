@@ -11,7 +11,7 @@ class LocalizationSystemPage extends StatefulWidget {
 class _LocalizationSystemPageState extends State<LocalizationSystemPage> {
   @override
   Widget build(BuildContext context){
-    Scaffold(
+  return Scaffold(
       appBar: AppBar(
         title: Text('Idiomes'),
         centerTitle: true,
