@@ -7,6 +7,8 @@ Map<String, WidgetBuilder> getRoutes() {
   return <String, WidgetBuilder>{
     '/': (BuildContext context) => HomePage(),
     'gallery': (BuildContext context) => GalleryPage(),
-    'star': (BuildContext context) => StarPage()
+    'star': (BuildContext context) => StarPage(),
+    'pong': (BuildContext context) => PongGame(),
+    'language': (BuildContext context) => LocalizationSystemPage()
   };
 }
