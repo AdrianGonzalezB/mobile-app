@@ -25,7 +25,7 @@ class _AnimatedContainerPageState extends State<StarPage> {
         title: Text('Star Game'),
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         children: [
             _texto(),
             Divider(),
@@ -34,25 +34,11 @@ class _AnimatedContainerPageState extends State<StarPage> {
           ),
         floatingActionButton: FloatingActionButton( //crear el boton q lo cambia
           child: Icon(Icons.refresh), //icono de play arrow
-          onPressed: () => _randomContainer(), //si se presiona acciona el void
+          onPressed: () => null, //si se presiona acciona el void
           ),
     );
 
   
-  }
-
-  void _randomContainer() {
-    final random = Random(); //se usa random
-    setState(() {
-      _width = random.nextInt(300).toDouble(); //se crea un random de ancho
-      _height = random.nextInt(300).toDouble(); //rafom de alto
-      _color = Color.fromRGBO( //random de color RGB
-        random.nextInt(255),
-        random.nextInt(255),
-        random.nextInt(255),
-        1);
-        _borderRadius = BorderRadius.circular(random.nextInt(100).toDouble()); //random borde
-    });
   }
 
   Widget _texto(){
@@ -140,18 +126,53 @@ class _AnimatedContainerPageState extends State<StarPage> {
             height: 100,
             child:Center(child: Text("8",textScaleFactor: 2.5,))
           ),
-          Container(
+          WidgetAnimado()
+          /*Container(
             margin: margen,
             color: Colors.amber,
             width: 100,
             height: 100,
             child:Center(child: Text("9",textScaleFactor: 2.5,))
-          ),
+          ),*/
         ],
       ),
     );
   }
 
+}
+
+class WidgetAnimado extends StatefulWidget {
+  const WidgetAnimado({Key? key}) : super(key: key);
+
+  @override
+  State<WidgetAnimado> createState() => _ContainerState();
+}
+
+class _ContainerState extends State<WidgetAnimado> {
+  bool selected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedScale(
+            scale: selected ? 1.10 : 1.00,
+            duration: const Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selected = !selected;
+                });
+              },
+              child: Container(
+            margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 20),
+            color: Colors.amber,
+            width: 100,
+            height: 100,
+            child:Center(child: Text("9",textScaleFactor: 2.5,))
+              ),
+            ),
+    );
+  }
 }
 
 
