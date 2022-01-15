@@ -104,8 +104,8 @@ class _PongGameState extends State<PongGame> {
                       style: TextStyle(
                         color: 
                         enemydied 
-                    ? Colors.pink[100]
-                    : Colors.deepPurple[100],
+                    ? Colors.pink[800]
+                    : Colors.deepPurple[800],
                       ),
                     ),
                   ),
@@ -192,16 +192,14 @@ class _PongGameState extends State<PongGame> {
   void moveLeft() {
     setState(() {
       if (!(playerX - 0.1  <= -1)) 
-        playerX -= 0.05;
-      
-      
+        playerX -= 0.1;
     });
   }
 
   void moveRight() {
     setState(() {
       if (!(playerX + brickWidth >= 1))
-      playerX += 0.05;
+      playerX += 0.1;
     });
   }
 
@@ -228,8 +226,8 @@ class _PongGameState extends State<PongGame> {
             // Score screen
             ScoreScreen(
               gameHasStarted: gameStarted,
-              enemyScore: enemyScore,
-              playerScore: playerScore,
+              enemyScore: enemyScore.toString(),
+              playerScore: playerScore.toString(),
             ),
 
             // Enemy top Brick
