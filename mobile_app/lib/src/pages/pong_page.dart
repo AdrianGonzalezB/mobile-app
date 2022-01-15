@@ -1,12 +1,12 @@
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures, use_key_in_widget_constructors
+
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_app/src/pages/ball.dart';
-import 'package:mobile_app/src/pages/brick.dart';
-import 'package:mobile_app/src/pages/coverscreen.dart';
-import 'package:mobile_app/src/pages/home_page.dart';
+import 'package:mobile_app/src/pages/pages.dart';
+import 'package:mobile_app/src/pages/scorescreen.dart';
+
 
 class PongGame extends StatefulWidget {
   @override
@@ -19,10 +19,10 @@ class _PongGameState extends State<PongGame> {
   // Player variables (Bottom Brick)
   double playerX = -0.2;
   double brickWidth = 0.4; // out of 2
-
+  int playerScore = 0;
   // Enemy variables (Top Brick)
   double enemyX = -0.2;
-
+  int enemyScore = 0;
   // Ball variables
   double ballX = 0;
   double ballY = 0;
@@ -39,18 +39,40 @@ class _PongGameState extends State<PongGame> {
       moveBall();
 
       // Move enemy Block
-
+      moveEnemy();
       // Check if the player is dead
       if (isPlayerDead()) {
+        enemyScore++;
         timer.cancel();
         // Resets the game
         //resetGame();
-        _showDialog();
+        _showDialog(false);
+      }
+      if (isEnemyDead()) {
+        playerScore++;
+        timer.cancel();
+        // Resets the game
+        //resetGame();
+        _showDialog(true);
       }
     });
   }
+  
+  bool isEnemyDead() {
+    if (ballY <= -1) {
+      return true;
+    }
 
-  void _showDialog() {
+    return false;
+  }
+
+  void moveEnemy() {
+    setState(() {
+      enemyX = ballX;
+    });
+  }
+
+  void _showDialog(bool enemydied) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -59,6 +81,7 @@ class _PongGameState extends State<PongGame> {
             backgroundColor: Colors.deepPurple,
             title: Center(
               child: Text(
+                enemydied ? 'PINK WIN' :
                 'PURPLE WIN',
                 style: TextStyle(
                   color: Colors.white,
@@ -73,18 +96,32 @@ class _PongGameState extends State<PongGame> {
                   borderRadius: BorderRadius.circular(5),
                   child: Container(
                     padding: EdgeInsets.all(7),
-                    color: Colors.deepPurple[100],
+                    color: enemydied 
+                    ? Colors.pink[100]
+                    : Colors.deepPurple[100],
                     child: Text(
                       "PLAY AGAIN",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: 
+                        enemydied 
+                    ? Colors.pink[100]
+                    : Colors.deepPurple[100],
                       ),
                     ),
                   ),
                 ),
               ),
               GestureDetector(
-                onTap: resetGame,
+                onTap: () {
+                  setState(() {
+                    // Return to HomePage if Exit is pressed.
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                      builder: (context) => HomePage()),
+                      );
+                  });
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Container(
@@ -111,6 +148,7 @@ class _PongGameState extends State<PongGame> {
       ballX = 0.0;
       ballY = 0.0;
       playerX = -0.2;
+      enemyX = -0.02;
     });
   }
 
@@ -153,12 +191,16 @@ class _PongGameState extends State<PongGame> {
 
   void moveLeft() {
     setState(() {
-      playerX -= 0.05;
+      if (!(playerX - 0.1  <= -1)) 
+        playerX -= 0.05;
+      
+      
     });
   }
 
   void moveRight() {
     setState(() {
+      if (!(playerX + brickWidth >= 1))
       playerX += 0.05;
     });
   }
@@ -182,11 +224,20 @@ class _PongGameState extends State<PongGame> {
             CoverScreen(
               gameHasStarted: gameStarted,
             ),
-            // Top Brick
-            MyBrick(x: 0.0, y: -0.9, brickWidth: brickWidth),
 
-            // Bottom Brick
-            MyBrick(x: playerX, y: 0.9, brickWidth: brickWidth),
+            // Score screen
+            ScoreScreen(
+              gameHasStarted: gameStarted,
+              enemyScore: enemyScore,
+              playerScore: playerScore,
+            ),
+
+            // Enemy top Brick
+            MyBrick(x: enemyX, y: -0.9, brickWidth: brickWidth, thisIsEnemy: true),
+
+            // Player bottom Brick
+            MyBrick(x: playerX, y: 0.9, brickWidth: brickWidth, thisIsEnemy: false),
+
             // Ball
             MyBall(x: ballX, y: ballY),
           ])),
