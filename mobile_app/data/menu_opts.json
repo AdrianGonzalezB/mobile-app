@@ -1,5 +1,5 @@
 {
-    "nomApp" : "app",
+    "nomApp" : "App",
     "rutes" : [
         {
             "ruta" : "gallery",
@@ -19,7 +19,7 @@
         {
             "ruta" : "star",
             "icona" : "star",
-            "texte": " "
+            "texte": "Star Game"
         }
     ]
 }

@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('app'),
+        title: Text('App'),
       ),
       body: _llista(),
     );
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget _llista() {
     return FutureBuilder(
         future: menuProvider.CarregarDades(),
-        initialData: [],
+        //initialData: [],
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           //print('builder');
           //print(snapshot.data);
