@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/src/pages/pages.dart';
-import 'package:mobile_app/src/pages/scorescreen.dart';
+import 'package:mobile_app/src/pages/utilities/utilities.dart';
 
 class PongGame extends StatefulWidget {
   @override
@@ -176,11 +176,11 @@ class _PongGameState extends State<PongGame> {
       // Vertical movement
       if (ballYDirection == direction.DOWN)
         ballY += 0.001;
-      else if (ballYDirection == direction.UP) ballY -= 0.01;
+      else if (ballYDirection == direction.UP) ballY -= 0.001;
       // Horitzontal movement
       if (ballXDirection == direction.LEFT)
         ballX -= 0.001;
-      else if (ballXDirection == direction.RIGHT) ballX += 0.01;
+      else if (ballXDirection == direction.RIGHT) ballX += 0.001;
     });
   }
 
