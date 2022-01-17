@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/src/pages/pages.dart';
+import 'package:mobile_app/src/pages/widget_animado.dart';
 import 'package:mobile_app/src/providers/menu_providers.dart';
 
 
@@ -15,6 +16,10 @@ class StarPage extends StatefulWidget { //cambia su estado
 }
 
 class _AnimatedContainerPageState extends State<StarPage> { 
+  List<bool> ocupado= [false, false, false, false, false, false, false, false, false];
+
+  Random aleatorio = new Random();
+// Producir nuevo int aleatorio entre 0 y 99
 
   @override
   Widget build(BuildContext context) { //contenido
@@ -36,7 +41,7 @@ class _AnimatedContainerPageState extends State<StarPage> {
 
   Widget _texto(){
     return Text(
-    'Pulsa las cajas para encontrar las estrella escondidas',
+    'Pulsa las cajas para encontrar las estrellas escondidas',
     style: TextStyle(
       fontSize: 20,
       color: Colors.black,
@@ -45,19 +50,21 @@ class _AnimatedContainerPageState extends State<StarPage> {
 
 
   Widget _container() {
+    int intAletorio = aleatorio.nextInt(9);
+    ocupado[0] = true;
     return Container(
       child: Wrap(
         direction: Axis.horizontal,
         children: <Widget>[
-          WidgetAnimado("1" , Colors.blue),
-          WidgetAnimado("2" , Colors.red),
-          WidgetAnimado("3" , Colors.teal),
-          WidgetAnimado("4" , Colors.indigo),
-          WidgetAnimado("5" , Colors.orange),
-          WidgetAnimado("6" , Colors.lightGreen),
-          WidgetAnimado("7" , Colors.blueGrey),
-          WidgetAnimado("8" , Colors.purple),
-          WidgetAnimado("9" , Colors.amber),
+          WidgetAnimado("1" , Colors.blue, ocupado[0]),
+          WidgetAnimado("2" , Colors.red, ocupado[1]),
+          WidgetAnimado("3" , Colors.teal, ocupado[2]),
+          WidgetAnimado("4" , Colors.indigo, ocupado[3]),
+          WidgetAnimado("5" , Colors.orange, ocupado[4]),
+          WidgetAnimado("6" , Colors.lightGreen, ocupado[5]),
+          WidgetAnimado("7" , Colors.blueGrey, ocupado[6]),
+          WidgetAnimado("8" , Colors.purple, ocupado[7]),
+          WidgetAnimado("9" , Colors.amber, ocupado[8]),
          
         ],
       ),
@@ -65,75 +72,4 @@ class _AnimatedContainerPageState extends State<StarPage> {
   }
 
 }
-
-class WidgetAnimado extends StatefulWidget {  
-   String numero = " ";
-   MaterialColor colorful = Colors.deepOrange;
-   WidgetAnimado(String s, MaterialColor color) {
-     this.numero = s;
-     this.colorful = color;
-   }
-
-  @override
-  State<WidgetAnimado> createState() => _ContainerState(Container, numero, colorful);
-}
-
-class _ContainerState extends State<WidgetAnimado> {
-  bool selected = false;
-  String numero = "0";
-  MaterialColor colorful = Colors.deepOrange;
-  
-  _ContainerState(Type container, String number, MaterialColor colorido){
-    this.numero = number;
-    this.colorful = colorido;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return 
-    AnimatedScale(
-            scale: selected ? 1.20 : 1.00,
-            duration: const Duration(seconds: 1),
-            curve: Curves.fastOutSlowIn,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selected = !selected;
-                });
-              },
-              child:  _posiciones(selected)
-              ),
-            );
-  }
-
-
-  Widget _listaContainer(BuildContext context) {
-    return Container(
-            margin: EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 20),
-            color: colorful,
-            width: 100,
-            height: 100,
-            child:Center(child: Text(numero,textScaleFactor: 2.5,))
-    );
-      
-    }
-
-    Widget _posiciones(bool selected){
-    return Stack(
-      children: <Widget>[    
-          AnimatedContainer(
-            duration: Duration(milliseconds: 1000),
-            curve: Curves.decelerate,
-            margin: selected ? EdgeInsets.only(top: 125, left: 25) : EdgeInsets.only(top: 20, left: 25),
-            child: Icon(
-              Icons.star,
-              color: Colors.yellowAccent,
-              size: 75,
-              )
-          ),
-          _listaContainer(context),
-        ],
-    );
-  }
-  }
 
