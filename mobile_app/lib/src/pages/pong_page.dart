@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:mobile_app/src/pages/pages.dart';
 import 'package:mobile_app/src/pages/scorescreen.dart';
 
-
 class PongGame extends StatefulWidget {
   @override
   _PongGameState createState() => _PongGameState();
@@ -57,7 +56,7 @@ class _PongGameState extends State<PongGame> {
       }
     });
   }
-  
+
   bool isEnemyDead() {
     if (ballY <= -1) {
       return true;
@@ -81,8 +80,7 @@ class _PongGameState extends State<PongGame> {
             backgroundColor: Colors.deepPurple,
             title: Center(
               child: Text(
-                enemydied ? 'PINK WIN' :
-                'PURPLE WIN',
+                enemydied ? 'PINK WIN' : 'PURPLE WIN',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -96,16 +94,14 @@ class _PongGameState extends State<PongGame> {
                   borderRadius: BorderRadius.circular(5),
                   child: Container(
                     padding: EdgeInsets.all(7),
-                    color: enemydied 
-                    ? Colors.pink[100]
-                    : Colors.deepPurple[100],
+                    color:
+                        enemydied ? Colors.pink[100] : Colors.deepPurple[100],
                     child: Text(
                       "PLAY AGAIN",
                       style: TextStyle(
-                        color: 
-                        enemydied 
-                    ? Colors.pink[800]
-                    : Colors.deepPurple[800],
+                        color: enemydied
+                            ? Colors.pink[800]
+                            : Colors.deepPurple[800],
                       ),
                     ),
                   ),
@@ -116,10 +112,9 @@ class _PongGameState extends State<PongGame> {
                   setState(() {
                     // Return to HomePage if Exit is pressed.
                     Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                      builder: (context) => HomePage()),
-                      );
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
                   });
                 },
                 child: ClipRRect(
@@ -181,25 +176,23 @@ class _PongGameState extends State<PongGame> {
       // Vertical movement
       if (ballYDirection == direction.DOWN)
         ballY += 0.001;
-      else if (ballYDirection == direction.UP) ballY -= 0.001;
+      else if (ballYDirection == direction.UP) ballY -= 0.01;
       // Horitzontal movement
       if (ballXDirection == direction.LEFT)
         ballX -= 0.001;
-      else if (ballXDirection == direction.RIGHT) ballX += 0.001;
+      else if (ballXDirection == direction.RIGHT) ballX += 0.01;
     });
   }
 
   void moveLeft() {
     setState(() {
-      if (!(playerX - 0.1  <= -1)) 
-        playerX -= 0.1;
+      if (!(playerX - 0.1 <= -1)) playerX -= 0.1;
     });
   }
 
   void moveRight() {
     setState(() {
-      if (!(playerX + brickWidth >= 1))
-      playerX += 0.1;
+      if (!(playerX + brickWidth >= 1)) playerX += 0.1;
     });
   }
 
@@ -231,10 +224,12 @@ class _PongGameState extends State<PongGame> {
             ),
 
             // Enemy top Brick
-            MyBrick(x: enemyX, y: -0.9, brickWidth: brickWidth, thisIsEnemy: true),
+            MyBrick(
+                x: enemyX, y: -0.9, brickWidth: brickWidth, thisIsEnemy: true),
 
             // Player bottom Brick
-            MyBrick(x: playerX, y: 0.9, brickWidth: brickWidth, thisIsEnemy: false),
+            MyBrick(
+                x: playerX, y: 0.9, brickWidth: brickWidth, thisIsEnemy: false),
 
             // Ball
             MyBall(x: ballX, y: ballY),
