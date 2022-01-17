@@ -67,13 +67,13 @@ class _ContainerState extends State<WidgetAnimado> {
     return Stack(
       children: <Widget>[   
 
-          _estrella(),
+          _estrella(context),
           _listaContainer(context),
         ],
-    );;
+    );
     }
 
-    Widget _estrella() {
+    Widget _estrella(BuildContext context) {
       if(star){
       return AnimatedContainer(
             duration: Duration(milliseconds: 1000),

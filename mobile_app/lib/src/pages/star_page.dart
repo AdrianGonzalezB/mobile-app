@@ -17,6 +17,7 @@ class StarPage extends StatefulWidget { //cambia su estado
 
 class _AnimatedContainerPageState extends State<StarPage> { 
   List<bool> ocupado= [false, false, false, false, false, false, false, false, false];
+  late int intAletorio; 
 
   Random aleatorio = new Random();
 // Producir nuevo int aleatorio entre 0 y 99
@@ -34,14 +35,15 @@ class _AnimatedContainerPageState extends State<StarPage> {
             Divider(),
             _container(),
           ],
-          )  
-           
+          
+       ) , 
+       
           );
   }
 
   Widget _texto(){
     return Text(
-    'Pulsa las cajas para encontrar las estrellas escondidas',
+    'Pulsa las cajas para encontrar la estrella escondida',
     style: TextStyle(
       fontSize: 20,
       color: Colors.black,
@@ -50,8 +52,8 @@ class _AnimatedContainerPageState extends State<StarPage> {
 
 
   Widget _container() {
-    int intAletorio = aleatorio.nextInt(9);
-    ocupado[0] = true;
+    intAletorio = aleatorio.nextInt(9);
+    ocupado[intAletorio] = true;
     return Container(
       child: Wrap(
         direction: Axis.horizontal,
