@@ -33,12 +33,12 @@ class _PongGameState extends State<PongGame> {
     gameStarted = true;
     Timer.periodic(Duration(microseconds: 1), (timer) {
       // Update direction
-      updateDirection();
+      updatePlayerDirection();
       // Ball Movement
       moveBall();
 
       // Move enemy Block
-      moveEnemy();
+      updateEnemyDirection();
       // Check if the player is dead
       if (isPlayerDead()) {
         enemyScore++;
@@ -58,18 +58,18 @@ class _PongGameState extends State<PongGame> {
   }
 
   bool isEnemyDead() {
-    if (ballY <= -1) {
+    if (ballY <= -0.9) {
       return true;
     }
 
     return false;
   }
 
-  void moveEnemy() {
+  /*void moveEnemy() {
     setState(() {
       enemyX = ballX;
     });
-  }
+  }*/
 
   void _showDialog(bool enemydied) {
     showDialog(
@@ -143,7 +143,7 @@ class _PongGameState extends State<PongGame> {
       ballX = 0.0;
       ballY = 0.0;
       playerX = -0.2;
-      enemyX = -0.02;
+      enemyX = -0.2;
     });
   }
 
@@ -155,10 +155,26 @@ class _PongGameState extends State<PongGame> {
     return false;
   }
 
-  void updateDirection() {
+  void updatePlayerDirection() {
     setState(() {
       // Update vertical direction
       if (ballY >= 0.9 && playerX + brickWidth >= ballX && playerX <= ballX) {
+        ballYDirection = direction.UP;
+      } else if (ballY <= -0.9) {
+        ballYDirection = direction.DOWN;
+      }
+
+      // Update horitzontal direction
+      if (ballX >= 1)
+        ballXDirection = direction.LEFT;
+      else if (ballX <= -1) ballXDirection = direction.RIGHT;
+    });
+  }
+
+  void updateEnemyDirection() {
+    setState(() {
+      // Update vertical direction
+      if (ballY >= 0.9 && enemyX + brickWidth >= ballX && enemyX <= ballX) {
         ballYDirection = direction.UP;
       } else if (ballY <= -0.9) {
         ballYDirection = direction.DOWN;
@@ -184,15 +200,27 @@ class _PongGameState extends State<PongGame> {
     });
   }
 
-  void moveLeft() {
+  void playerMoveLeft() {
     setState(() {
       if (!(playerX - 0.1 <= -1)) playerX -= 0.1;
     });
   }
 
-  void moveRight() {
+  void playerMoveRight() {
     setState(() {
       if (!(playerX + brickWidth >= 1)) playerX += 0.1;
+    });
+  }
+
+  void enemyMoveRight() {
+    setState(() {
+      if (!(enemyX + brickWidth >= 1)) enemyX += 0.1;
+    });
+  }
+
+  void enemyMoveLeft() {
+    setState(() {
+      if (!(enemyX - 0.1 <= -1)) enemyX -= 0.1;
     });
   }
 
@@ -203,8 +231,12 @@ class _PongGameState extends State<PongGame> {
       autofocus: true,
       onKey: (event) {
         if (event.isKeyPressed(LogicalKeyboardKey.arrowLeft))
-          moveLeft();
-        else if (event.isKeyPressed(LogicalKeyboardKey.arrowRight)) moveRight();
+          playerMoveLeft();
+        else if (event.isKeyPressed(LogicalKeyboardKey.arrowRight))
+          playerMoveRight();
+        else if (event.isKeyPressed(LogicalKeyboardKey.keyD))
+          enemyMoveRight();
+        else if (event.isKeyPressed(LogicalKeyboardKey.keyA)) enemyMoveLeft();
       },
       child: GestureDetector(
         onTap: startGame,
@@ -225,7 +257,7 @@ class _PongGameState extends State<PongGame> {
 
             // Enemy top Brick
             MyBrick(
-                x: enemyX, y: -0.9, brickWidth: brickWidth, thisIsEnemy: true),
+                x: enemyX, y: -0.85, brickWidth: brickWidth, thisIsEnemy: true),
 
             // Player bottom Brick
             MyBrick(
