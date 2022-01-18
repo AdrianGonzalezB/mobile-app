@@ -24,7 +24,7 @@ class _LocalizationSystemPageState extends State<LocalizationSystemPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              AppLocalizations.of(context)!.hello('Joan'),
+              AppLocalizations.of(context)!.hello('Jaume'),
               style: TextStyle(fontSize: 36),
             )
           ],

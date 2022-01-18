@@ -11,5 +11,6 @@ final _icons = <String, IconData>{
   'donut_large': Icons.donut_large,
   'input': Icons.input,
   'image': Icons.image,
-  'star': Icons.star
+  'star': Icons.star,
+  'ralla': Icons.linear_scale_sharp
 };

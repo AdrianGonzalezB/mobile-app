@@ -20,6 +20,11 @@
             "ruta" : "star",
             "icona" : "star",
             "texte": "Star Game"
+        },
+        {
+            "ruta" : "tictactoe",
+            "icona" : "ralla",
+            "texte" : "3 en ralla"
         }
     ]
 }
