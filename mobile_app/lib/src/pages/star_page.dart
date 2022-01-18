@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/src/pages/pages.dart';
-import 'package:mobile_app/src/pages/widget_animado.dart';
+import 'package:mobile_app/src/pages/utilities/widget_animado.dart';
 import 'package:mobile_app/src/providers/menu_providers.dart';
 
 

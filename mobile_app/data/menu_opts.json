@@ -20,6 +20,11 @@
             "ruta" : "star",
             "icona" : "star",
             "texte": "Star Game"
+        },
+        {
+            "ruta" : "text",
+            "icona" : "text",
+            "texte": "Text Dynamic"
         }
     ]
 }
