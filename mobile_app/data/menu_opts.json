@@ -22,9 +22,14 @@
             "texte": "Star Game"
         },
         {
+            "ruta": "text",
+            "icona": "text",
+            "texte": "Text Dynamic"
+        },
+        {
             "ruta" : "tictactoe",
             "icona" : "ralla",
-            "texte" : "3 en ralla"
+            "texte" : "3 en Raya"
         }
     ]
 }
