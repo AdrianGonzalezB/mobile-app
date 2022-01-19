@@ -38,7 +38,8 @@ class _PongGameState extends State<PongGame> {
       moveBall();
 
       // Move enemy Block
-      updateEnemyDirection();
+      moveEnemy();
+      //updateEnemyDirection();
       // Check if the player is dead
       if (isPlayerDead()) {
         enemyScore++;
@@ -58,18 +59,18 @@ class _PongGameState extends State<PongGame> {
   }
 
   bool isEnemyDead() {
-    if (ballY <= -0.9) {
+    if (ballY <= -1) {
       return true;
     }
 
     return false;
   }
 
-  /*void moveEnemy() {
+  void moveEnemy() {
     setState(() {
       enemyX = ballX;
     });
-  }*/
+  }
 
   void _showDialog(bool enemydied) {
     showDialog(
@@ -171,7 +172,7 @@ class _PongGameState extends State<PongGame> {
     });
   }
 
-  void updateEnemyDirection() {
+  /*void updateEnemyDirection() {
     setState(() {
       // Update vertical direction
       if (ballY >= 0.9 && enemyX + brickWidth >= ballX && enemyX <= ballX) {
@@ -185,7 +186,7 @@ class _PongGameState extends State<PongGame> {
         ballXDirection = direction.LEFT;
       else if (ballX <= -1) ballXDirection = direction.RIGHT;
     });
-  }
+  }*/
 
   void moveBall() {
     setState(() {
@@ -257,7 +258,7 @@ class _PongGameState extends State<PongGame> {
 
             // Enemy top Brick
             MyBrick(
-                x: enemyX, y: -0.85, brickWidth: brickWidth, thisIsEnemy: true),
+                x: enemyX, y: -0.9, brickWidth: brickWidth, thisIsEnemy: true),
 
             // Player bottom Brick
             MyBrick(
