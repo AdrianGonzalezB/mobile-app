@@ -32,14 +32,11 @@ class _PongGameState extends State<PongGame> {
   void startGame() {
     gameStarted = true;
     Timer.periodic(Duration(microseconds: 1), (timer) {
-      // Update direction
+      // Update direction of the ball.
       updatePlayerDirection();
       // Ball Movement
       moveBall();
 
-      // Move enemy Block
-      moveEnemy();
-      //updateEnemyDirection();
       // Check if the player is dead
       if (isPlayerDead()) {
         enemyScore++;
@@ -62,10 +59,10 @@ class _PongGameState extends State<PongGame> {
     if (ballY <= -1) {
       return true;
     }
-
     return false;
   }
 
+  // Imposible win, the enemy follows the ball all the time.
   void moveEnemy() {
     setState(() {
       enemyX = ballX;
@@ -158,10 +155,13 @@ class _PongGameState extends State<PongGame> {
 
   void updatePlayerDirection() {
     setState(() {
-      // Update vertical direction
+      // Update vertical direction when hits the player
       if (ballY >= 0.9 && playerX + brickWidth >= ballX && playerX <= ballX) {
         ballYDirection = direction.UP;
-      } else if (ballY <= -0.9) {
+        // Update vertical direction when hits the enemy
+      } else if (ballY <= -0.9 &&
+          enemyX + brickWidth >= ballX &&
+          enemyX <= ballX) {
         ballYDirection = direction.DOWN;
       }
 
@@ -171,22 +171,6 @@ class _PongGameState extends State<PongGame> {
       else if (ballX <= -1) ballXDirection = direction.RIGHT;
     });
   }
-
-  /*void updateEnemyDirection() {
-    setState(() {
-      // Update vertical direction
-      if (ballY >= 0.9 && enemyX + brickWidth >= ballX && enemyX <= ballX) {
-        ballYDirection = direction.UP;
-      } else if (ballY <= -0.9) {
-        ballYDirection = direction.DOWN;
-      }
-
-      // Update horitzontal direction
-      if (ballX >= 1)
-        ballXDirection = direction.LEFT;
-      else if (ballX <= -1) ballXDirection = direction.RIGHT;
-    });
-  }*/
 
   void moveBall() {
     setState(() {
@@ -194,13 +178,14 @@ class _PongGameState extends State<PongGame> {
       if (ballYDirection == direction.DOWN)
         ballY += 0.001;
       else if (ballYDirection == direction.UP) ballY -= 0.001;
-      // Horitzontal movement
+      // Horitzontal movement.
       if (ballXDirection == direction.LEFT)
         ballX -= 0.001;
       else if (ballXDirection == direction.RIGHT) ballX += 0.001;
     });
   }
 
+  // Player movement, left and right.
   void playerMoveLeft() {
     setState(() {
       if (!(playerX - 0.1 <= -1)) playerX -= 0.1;
@@ -213,6 +198,7 @@ class _PongGameState extends State<PongGame> {
     });
   }
 
+  // Enemy movement, left and right.
   void enemyMoveRight() {
     setState(() {
       if (!(enemyX + brickWidth >= 1)) enemyX += 0.1;
