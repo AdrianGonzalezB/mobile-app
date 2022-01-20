@@ -9,31 +9,30 @@ import 'package:mobile_app/src/pages/utilities/widget_animado.dart';
 import 'package:mobile_app/src/providers/menu_providers.dart';
 
 
-class StarPage extends StatefulWidget { //cambia su estado
+class StarPage extends StatefulWidget { //cambia su estado 
 
   @override
-  _AnimatedContainerPageState  createState() => _AnimatedContainerPageState(); //crear container animado
+  _AnimatedContainerPageState  createState() => _AnimatedContainerPageState(); //Crea la ventana principal
 }
 
 class _AnimatedContainerPageState extends State<StarPage> { 
-  List<bool> ocupado= [false, false, false, false, false, false, false, false, false];
-  late int intAletorio; 
+  List<bool> ocupado= [false, false, false, false, false, false, false, false, false]; //control de cooleans por medio de una lista
+  late int intAletorio; //el aleatorio se sacara de entre esos 9
 
   Random aleatorio = new Random();
-// Producir nuevo int aleatorio entre 0 y 99
 
   @override
   Widget build(BuildContext context) { //contenido
     return Scaffold(
-      appBar: AppBar( //en la appbar
+      appBar: AppBar(
         title: Text('Star Game'),
       ),
-      body: ListView(
+      body: ListView( //Se ordena en forma de lista 
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         children: [
-            _texto(),
+            _texto(), //Primero el texto de informacion
             Divider(),
-            _container(),
+            _container(), //Luego los contenedores
           ],
           
        ) , 
@@ -41,8 +40,8 @@ class _AnimatedContainerPageState extends State<StarPage> {
           );
   }
 
-  Widget _texto(){
-    return Text(
+  Widget _texto(){ //Texto principal
+    return Text( 
     'Pulsa las cajas para encontrar la estrella escondida',
     style: TextStyle(
       fontSize: 20,
@@ -52,12 +51,12 @@ class _AnimatedContainerPageState extends State<StarPage> {
 
 
   Widget _container() {
-    intAletorio = aleatorio.nextInt(9);
-    ocupado[intAletorio] = true;
-    return Container(
-      child: Wrap(
+    intAletorio = aleatorio.nextInt(9); //Se saca un numero aleatorio hasta el 9
+    ocupado[intAletorio] = true; //y se le asigna a uno de los boolean
+    return Container( //Devoluvemos un container con todos los contenedores animados
+      child: Wrap( //Ordenados por wrap horizontal
         direction: Axis.horizontal,
-        children: <Widget>[
+        children: <Widget>[ //Cada contenedor animado se le pasa su numero en forma de tring, el color y el boolean antes preparado
           WidgetAnimado("1" , Colors.blue, ocupado[0]),
           WidgetAnimado("2" , Colors.red, ocupado[1]),
           WidgetAnimado("3" , Colors.teal, ocupado[2]),
