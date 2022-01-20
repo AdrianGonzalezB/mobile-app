@@ -34,6 +34,7 @@ class _GalleryState extends State<Gallery> {
     super.initState();
   }
 
+  // Metodo para cargar las imagenes.
   void _loadImages() async {
     var url = 'https://picsum.photos/v2/list';
     final response = await http.get(Uri.parse(url));
@@ -55,10 +56,12 @@ class _GalleryState extends State<Gallery> {
         child: CircularProgressIndicator(),
       );
     }
+    // Hacemos un grid para colocar las imagenes
     return GridView.builder(
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (context, index) => GestureDetector(
+        // Al hacer clic abrimos la imagen en grande
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => ImagePage(images[index])),
@@ -79,11 +82,13 @@ class ImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Ponemos el fondo en negro
       appBar: AppBar(
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
       body: Center(
+        // Hacemos la imagen seleccionada interactiva.
         child: InteractiveViewer(
             boundaryMargin: const EdgeInsets.all(20.0),
             minScale: 0.1,
