@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DynamicText extends StatefulWidget {
+class DynamicText extends StatefulWidget {//clase cambiante
  
   @override
   _DynamicText  createState() => _DynamicText();
@@ -11,6 +11,7 @@ class DynamicText extends StatefulWidget {
 }
  
 class _DynamicText extends State<DynamicText> {
+  //se requiere de la palabra, el estado de seleccionado, el tamaño default y el color default
   String _palabra = '';
   bool isSelected = false;
   double _size = 50.0;
@@ -22,12 +23,13 @@ class _DynamicText extends State<DynamicText> {
       appBar: AppBar(
         title: Text('Texto Dinamico'),
       ),
-      body: ListView(
+      body: ListView( //se muestra como una lista de manera organizada
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         children: [
-          _palabraInput(),
+          _palabraInput(), // es un espacio para poner la palabra que tu quueras
           Divider(),
-          Container(
+          Container( //el contenedor sera el que varia interactivamente despeus
+          //tiene los parametros donde se acomodara la informacion
             height: 400,
             width: 300,
             alignment: Alignment.center,
@@ -36,7 +38,7 @@ class _DynamicText extends State<DynamicText> {
             )
         ],
         ),
-        floatingActionButton: FloatingActionButton( //crear el boton q lo cambia
+        floatingActionButton: FloatingActionButton( //crear el boton q lo cambia el estado de la palabra
           child: Icon(Icons.play_arrow), //icono de play arrow
           onPressed: () => _random(), //si se presiona acciona el void
           )
@@ -57,7 +59,7 @@ class _DynamicText extends State<DynamicText> {
   }
 
    Widget _palabraInput() {
-    return TextField(
+    return TextField(//devuelve uun espacio para poner texto y en caso de que esta cambia, tambien la palabra que se muestra en el contenedor
       textCapitalization: TextCapitalization.sentences,
       onChanged: (valor){
         setState(() {
@@ -65,7 +67,7 @@ class _DynamicText extends State<DynamicText> {
         //print(_nombre);
         });
       },
-      decoration: InputDecoration(
+      decoration: InputDecoration( //informacion extra de decoracion
         hintText: 'Escribe algo',
         labelText: "Texto",
         suffixIcon: Icon(Icons.text_format),
@@ -77,13 +79,14 @@ class _DynamicText extends State<DynamicText> {
     );
   }
 
-  Widget _textoDinamico() {
+  Widget _textoDinamico() { //devuelve un AnimatedDefaultTextStyle que es la animacion que se muestra en el contenedor
           final random = Random();
     return AnimatedDefaultTextStyle(
+      //los parametros de animacion
            duration: const Duration(milliseconds: 1000),
            curve: Curves.fastOutSlowIn,
            style: 
-           TextStyle(
+           TextStyle( //aqui se muestran los valores que pueden r cambiando
              fontSize: _size,
              color: Color.fromRGBO( //random de color RGB
                random.nextInt(255),
@@ -93,7 +96,7 @@ class _DynamicText extends State<DynamicText> {
                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w100
            ) ,
            child: Text(
-             _palabra,
+             _palabra, //el texto sera la palabra proporcionada
              textAlign: TextAlign.center,
            ),
            
